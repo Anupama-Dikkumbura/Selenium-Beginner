@@ -8,7 +8,10 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -16,6 +19,7 @@ public class RegisterTest {
 	
 	WebDriver driver;
 	SoftAssert sa;
+	WebDriverWait wait;
 	
 	@BeforeTest
 	public void setup() {
@@ -25,6 +29,7 @@ public class RegisterTest {
 		
 		driver = new ChromeDriver(op);
 		sa = new SoftAssert();
+		wait = new WebDriverWait(driver, 20);
 		
 	}
 	
@@ -34,6 +39,7 @@ public class RegisterTest {
 		driver.findElement(By.linkText("Register")).click();
 		
 		// Verifying Signup Page
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
 		sa.assertEquals(driver.findElement(By.tagName("h1")).getText(), "Sign up as a new user");
 		
 		// User Title
@@ -74,6 +80,7 @@ public class RegisterTest {
 		driver.findElement(By.name("submit")).click();
 		
 		// Verifying Login Page
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h3")));
 		sa.assertEquals(driver.findElement(By.tagName("h3")).getText(), "Login");
 		
 		// Login using created credentials
@@ -82,6 +89,7 @@ public class RegisterTest {
 		driver.findElement(By.name("submit")).click();
 		
 		// Login verification
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h4")));
 		sa.assertEquals(driver.findElement(By.tagName("h4")).getText(), "anupama@gmail.com");
 		
 	}
